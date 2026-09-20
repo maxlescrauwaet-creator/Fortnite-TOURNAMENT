@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortnite Creator Tournament | October Series</title>
+    <style>
+        :root {
+            --primary: #9d4edd;
+            --secondary: #7b2cbf;
+            --dark: #07000d;
+            --card-bg: rgba(22, 8, 40, 0.85);
+            --light: #e0aaff;
+            --accent: #ff007f;
+            --success: #00f5d4;
+            --youtube: #ff0000;
+            --twitch: #9146ff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--dark);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 20% 10%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 90%, rgba(255, 0, 127, 0.15) 0%, transparent 40%),
+                var(--dark);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #3c096c, var(--secondary), var(--primary));
+            text-align: center;
+            padding: 60px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            pointer-events: none;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(157, 78, 221, 0.8), 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin-top: 12px;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .host-tag {
+            display: inline-block;
+            background: rgba(0, 245, 212, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* STREAM BUTTONS CONTAINER */
+        .stream-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-yt {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: 2px solid #ff4d4d;
+        }
+
+        .btn-yt:hover {
+            background: linear-gradient(135deg, #e60000, #990000);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-twitch {
+            background: linear-gradient(135deg, #9146ff, #772ce8);
+            border: 2px solid #b180ff;
+        }
+
+        .btn-twitch:hover {
+            background: linear-gradient(135deg, #772ce8, #5a189a);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(145, 70, 255, 0.5);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 2px solid rgba(157, 78, 221, 0.5);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: var(--primary);
+        }
+
+        h2 {
+            color: var(--light);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 12px;
+            margin-top: 0;
+            font-size: 1.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-box {
+            background: rgba(123, 44, 191, 0.15);
+            border-left: 6px solid var(--accent);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .info-box p {
+            margin: 0 0 10px 0;
+        }
+
+        .info-box ul {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .schedule-list li {
+            background: rgba(123, 44, 191, 0.15);
+            margin-bottom: 15px;
+            padding: 18px 22px;
+            border-radius: 12px;
+            border-left: 6px solid var(--accent);
+            font-size: 1.15rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .schedule-list li:hover {
+            background: rgba(123, 44, 191, 0.3);
+            transform: translateX(5px);
+        }
+
+        .schedule-list li strong {
+            color: var(--success);
+        }
+
+        .schedule-list span.time {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: var(--light);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #3c096c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0f021e;
+        }
+
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid #2b0852;
+        }
+
+        th {
+            background-color: var(--secondary);
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1.2px;
+        }
+
+        tr:hover {
+            background-color: rgba(157, 78, 221, 0.12);
+        }
+
+        .top-five {
+            background-color: rgba(0, 245, 212, 0.08) !important;
+            border-left: 4px solid var(--success);
+        }
+
+        .status-qualified {
+            color: var(--success);
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
+        }
+
+        .status-active {
+            color: #c4b5fd;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px;
+            background-color: #040008;
+            color: #7b2cbf;
+            font-size: 0.95rem;
+            border-top: 1px solid #1e0538;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            .schedule-list li { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .stream-buttons { flex-direction: column; align-items: stretch; padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="host-tag">Hosted by WIIPY</div>
+        <h1>⚡ Fortnite Creator Tournament ⚡</h1>
+        <p>The Ultimate October Showdown for 16 Small Content Creators</p>
+        
+        <!-- LIVE STREAM BUTTONS -->
+        <div class="stream-buttons">
+            <a href="https://www.youtube.com/@wiipy/streams" target="_blank" class="btn btn-yt">
+                📺 Watch on YouTube
+            </a>
+            <a href="https://www.twitch.tv/wiipygaming" target="_blank" class="btn btn-twitch">
+                💜 Watch on Twitch
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- ABOUT & POINTS SYSTEM -->
+        <div class="section">
+            <h2>ℹ️ About & Points System</h2>
+            <div class="info-box">
+                <p><strong>Hosted by WIIPY:</strong> This exclusive tournament series brings together 16 small content creators for pure competition, intense matches, and epic YouTube content!</p>
+                <p><strong>How scoring works:</strong></p>
+                <ul>
+                    <li><strong>Per Round:</strong> 1st place = 3 points | 2nd place = 2 points | 3rd place = 1 point (others get 0 points).</li>
+                    <li><strong>Overall Match / Map Finale:</strong> At the end of an entire match/map session, extra points are awarded based on final standings:
+                        <ul>
+                            <li>🥇 1st place: <strong>25 points</strong></li>
+                            <li>🥈 2nd place: <strong>20 points</strong></li>
+                            <li>🥉 3rd place: <strong>15 points</strong></li>
+                            <li>🏅 4th place: <strong>10 points</strong></li>
+                            <li>🏅 5th place: <strong>5 points</strong></li>
+                            <li><em>Others get 0 bonus points.</em></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TOURNAMENT SCHEDULE -->
+        <div class="section">
+            <h2>📅 Tournament Schedule (20:30 - 22:00 CET)</h2>
+            <ul class="schedule-list">
+                <li>
+                    <span><strong>October 9:</strong> Tilted Zone Wars (Round 1 - 16 Players)</span> 
+                    <span class="time">20:30 - 22:00</span>
+                </li>
+                <li>
+                    <span><strong>October 16:</strong> Tilted Zone Wars (Round 2 / Halve Finale)</span> 
+                    <span class="time">20:30 - 22:00</span>
+                </li>
+                <li>
+                    <span><strong>October 23:</strong> 🏆 <strong>Grand Finale: Box PVP (Top 5 Only!)</strong></span> 
+                    <span class="time">20:30 - 22:00</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SCOREBOARD -->
+        <div class="section">
+            <h2>🏆 Live Leaderboard & Standings</h2>
+            
+            <div class="table-wrapper">
+                <table id="scoreTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Creator / Player</th>
+                            <th>Points</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JavaScript automatically populates this table -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Fortnite Creator Tournament Series. Hosted by WIIPY.</p>
+    </footer>
+
+    <script>
+        // =========================================================================
+        // 🛠️ SCOREBOARD EDITOR: Change the point values and player names here!
+        // =========================================================================
+        
+        let players = [
+            { name: "Creator 1", points: 45 },
+            { name: "Creator 2", points: 40 },
+            { name: "Creator 3", points: 35 },
+            { name: "Creator 4", points: 30 },
+            { name: "Creator 5", points: 28 },
+            { name: "Creator 6", points: 25 },
+            { name: "Creator 7", points: 22 },
+            { name: "Creator 8", points: 20 },
+            { name: "Creator 9", points: 18 },
+            { name: "Creator 10", points: 15 },
+            { name: "Creator 11", points: 12 },
+            { name: "Creator 12", points: 10 },
+            { name: "Creator 13", points: 8 },
+            { name: "Creator 14", points: 5 },
+            { name: "Creator 15", points: 3 },
+            { name: "Creator 16", points: 1 }
+        ];
+
+        function updateScoreboard() {
+            // Sort players automatically from highest points to lowest points
+            players.sort((a, b) => b.points - a.points);
+
+            const tbody = document.querySelector("#scoreTable tbody");
+            tbody.innerHTML = "";
+
+            players.forEach((player, index) => {
+                let row = document.createElement("tr");
+                
+                let statusText = "Active / Competing";
+                let statusClass = "status-active";
+
+                // Highlight the top 5 players who qualify for the grand finale
+                if (index < 5) {
+                    row.classList.add("top-five");
+                    statusText = "🔥 QUALIFIED FOR FINALE!";
+                    statusClass = "status-qualified";
+                }
+
+                row.innerHTML = `
+                    <td><strong>#${index + 1}</strong></td>
+                    <td>${player.name}</td>
+                    <td><strong>${player.points}</strong></td>
+                    <td><span class="${statusClass}">${statusText}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize the scoreboard on page load
+        updateScoreboard();
+    </script>
+
+</body>
+</html>
